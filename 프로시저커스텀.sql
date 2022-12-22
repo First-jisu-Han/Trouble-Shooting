@@ -1,19 +1,14 @@
-CREATE PROCEDURE dbo.PR_SS_DY_VNDR_SLS_DSM_TERM (@p_stnrStrDate CHAR(8),@p_stnrEndDate CHAR(8))
+CREATE PROCEDURE dbo.지금 만든 한달 프로시저명 (@p_stnrStrDate CHAR(8),@p_stnrEndDate CHAR(8))
 AS              
 /*=============================================================================================
 
 파라 미터 - 시작일자(@p_stnrStrDate),종료일자(@p_stnrEndDate)
 리     턴 - NONE
-작성 일자 -2022.11.24
 작 성  자 - 한지수
-테 스  트 -
 -----------------------------------------------------------------------------------------------
 변경자   변경일자    변경사유
 
 -----------------------------------------------------------------------------------------------
-테스트 기간   수불처    테스트 시간
-
-================================================================================================*/
 
 -----------------------------------------------------------------------------------------------
 -- 변수 선언
@@ -28,17 +23,17 @@ BEGIN
     DECLARE cur_Rdp_Date CURSOR FOR
 	    
 	  SELECT DISTINCT(t1.stnr_date)
-	   FROM KHCM..TM_STNR_DATE t1
+	   FROM TM_STNR_DATE t1
 	   WHERE t1.stnr_date BETWEEN @p_stnrStrDate AND @p_stnrEndDate
 	
 	  ORDER BY t1.stnr_date
 	  
 	  OPEN cur_Rdp_Date
-	  FETCH NEXT FROM cur_Rdp_Date INTO @p_stnrStrDate     -- 기준시작일자
+	  FETCH NEXT FROM cur_R_Date INTO @p_stnrStrDate     -- 기준시작일자
 	  					 						
 	  WHILE @@FETCH_STATUS =0 BEGIN	
 	  
-	  EXECUTE KHPL..PR_SS_DY_VNDR_SLS_DSM @p_stnrStrDate
+	  EXECUTE 하루 집계 프로시저명 @p_stnrStrDate
 		
 	  FETCH NEXT FROM cur_Rdp_Date INTO @p_stnrStrDate
 	      							 	    							  	    							        
@@ -51,6 +46,6 @@ BEGIN
   END
 GO
 
-sp_procxmode PR_SS_DY_VNDR_SLS_DSM_TERM, anymode
+sp_procxmode 지금 만든 한달집계 프로시저명, anymode
 GO
 
